@@ -1,0 +1,51 @@
+// Topology
+//topology = anynet;
+//network_file = switch_mesh8x8;
+topology = mesh;
+k = 4;
+n = 2;
+//channel_width = 64;
+flit_width = 128;
+
+// Routing
+//routing_function = min;
+routing_function = dim_order;
+//routing_function = four_sided;
+//routing_function = valiant;
+//routing_function = directed_valiant; // column select
+//routing_function = planar_adapt;
+//routing_function = xy_yx;
+//routing_function = diamond;
+//routing_function = min_adapt;
+
+// Flow control
+num_vcs     = 2;
+vc_buf_size = 16;
+wait_for_tail_credit = 0;
+
+read_request_begin_vc = 0;
+read_request_end_vc = 0;
+
+read_reply_begin_vc = 1;
+read_reply_end_vc = 1;
+
+write_request_begin_vc = 2;
+write_request_end_vc = 2;
+
+write_reply_begin_vc = 3;
+write_reply_end_vc = 3;
+
+// Router architecture
+routing_delay  = 0;
+speculative = 1;
+
+latency_thres = 10000.0;
+
+// Simulation
+sim_type = fes2;
+stats_out = /home/mohamed/Dropbox/PhD/Software/simulator/hnocsim/booksim/stats.txt;
+pair_stats = 1;
+//print_activity = 1;
+watch_file = /home/mohamed/Dropbox/PhD/Software/simulator/hnocsim/booksim/watch_in.txt;
+watch_out = /home/mohamed/Dropbox/PhD/Software/simulator/hnocsim/booksim/watch_out.txt;
+

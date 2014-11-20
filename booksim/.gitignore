@@ -1,0 +1,13 @@
+test
+booksim
+lex.yy.c
+y.tab.c
+y.tab.h
+*.o
+work
+test
+*.swp
+*.so
+*.out
+vsim.wlf
+watch_out.txt
