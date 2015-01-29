@@ -1,0 +1,36 @@
+#!/bin/bash
+
+
+BOOKSIM_DIR='../../booksim'
+DESIGN_DIR=`pwd`
+
+#first compile booksim if it wasnt already compiled
+cd $BOOKSIM_DIR
+
+make
+
+cd $DESIGN_DIR
+
+#now compile the test file
+g++ -I$BOOKSIM_DIR test.cpp -o test
+
+#now run booksim in another terminal
+gnome-terminal -e $BOOKSIM_DIR/booksim\ noc_config&
+
+#wait a sec until the second terminal runs booksim
+sleep 2
+
+#finally, run the test code
+./test
+
+#close things
+
+killall booksim
+killall vsim
+killall vsimk
+
+rm -r work
+rm transcript
+rm socket
+rm *.out
+rm *.o *.so *.wlf *.vstf

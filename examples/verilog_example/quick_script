@@ -1,12 +1,11 @@
 #!/bin/bash
 
-export PATH=$PATH:/home/mohamed/altera/14.0/modelsim_ase/bin
-
-HNOCSIM_DIR='../..'
+VSIM_DIR=/home/mohamed/altera/14.0/modelsim_ase/include 
+BOOKSIM_DIR='../../booksim'
 DESIGN_DIR=`pwd`
 
 #remake booksim
-cd $HNOCSIM_DIR/booksim
+cd $BOOKSIM_DIR
 make
 cd $DESIGN_DIR
 
@@ -19,34 +18,23 @@ vlib work
 #######################
 
 #compile the rtl interface that talks to booksim's socket interface
-vlog -dpiheader $HNOCSIM_DIR/booksim/dpi.h $HNOCSIM_DIR/booksim/rtl_interface.sv
-
-#compile the fabric port
-vlog  $HNOCSIM_DIR/fabric_port/fabric_port_in/*.sv
-vlog  $HNOCSIM_DIR/fabric_port/fabric_port_out/*.sv
-
-#compile the fabric interface which instantiates fabric ports and an rtl interface
-vlog $HNOCSIM_DIR/booksim/fabric_interface.sv
+vlog -dpiheader $BOOKSIM_DIR/dpi.h $BOOKSIM_DIR/rtl_interface.sv
 
 #compile your design files (and testbenches) here
-vlog testbench_simple_fabric.sv
+vlog testbench.sv
 
 #########################################
 #recompile the booksim socket interface
 ########################################
 
-g++ -c -fPIC -m32 -I/home/mohamed/altera/14.0/modelsim_ase/include $HNOCSIM_DIR/booksim/booksim_interface.cpp
+g++ -c -fPIC -m32 -I$VSIM_DIR $BOOKSIM_DIR/booksim_interface.cpp
 g++ -shared -Bsymbolic -fPIC -m32 -o booksim_interface.so booksim_interface.o
 
 ###############################
 #run booksim in a new terminal
 ###############################
 
-if [ "$1" == "keep_open" ]; then
-	gnome-terminal --window-with-profile=keep_open -e $HNOCSIM_DIR/booksim/booksim\ noc_config &
-else
-	gnome-terminal -e $HNOCSIM_DIR/booksim/booksim\ noc_config &
-fi
+gnome-terminal -e $BOOKSIM_DIR/booksim\ noc_config &
 
 ################
 #run simulation

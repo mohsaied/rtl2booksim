@@ -102,8 +102,8 @@ always @(posedge clk or posedge reset) begin
 	if (reset) begin
 		f_id = 0;
 		cycle_count = 0;
-		exitSocket();
-		connectSocket();
+		//exitSocket();
+		//connectSocket();
 	end else begin
 		
 		//--------------------------------------
