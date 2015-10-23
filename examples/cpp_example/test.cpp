@@ -124,18 +124,22 @@ int main()
 	std::cout << " received " << rec_id << std::endl;
 	nextCycle(1);
 	
+	send_credit(4,0,1);
 	eject(&rec_id, &rec_vc);
 	std::cout << " received " << rec_id << std::endl;
 	nextCycle(1);
 
+	send_credit(4,0,1);
 	eject(&rec_id, &rec_vc);
 	std::cout << " received " << rec_id << std::endl;
 	nextCycle(1);
 
+	send_credit(4,0,1);
 	eject(&rec_id, &rec_vc);
 	std::cout << " received " << rec_id << std::endl;
 	nextCycle(1);
 
+	send_credit(4,0,1);
 	eject(&rec_id, &rec_vc);
 	std::cout << " received " << rec_id << std::endl;
 	nextCycle(1);
