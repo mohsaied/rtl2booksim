@@ -46,6 +46,4 @@ sim_type = fes2;
 stats_out = /home/mohamed/Dropbox/PhD/Software/simulator/hnocsim/booksim/stats.txt;
 pair_stats = 1;
 //print_activity = 1;
-watch_file = /home/mohamed/Dropbox/PhD/Software/simulator/hnocsim/booksim/watch_in.txt;
-watch_out = /home/mohamed/Dropbox/PhD/Software/simulator/hnocsim/booksim/watch_out.txt;
 

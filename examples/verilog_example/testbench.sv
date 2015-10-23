@@ -45,7 +45,7 @@ int i;
 int cycle_count;
 
 //dut
-rtl_interface #() dut ( .* );
+rtl_interface #(.VERBOSE(0)) dut ( .* );
 
 
 // generate clocks
@@ -108,11 +108,14 @@ initial begin
         flit_in[VALID_POS] = 1'b1; //valid
         flit_in[HEAD_POS] = 1'b1; //HEAD
         flit_in[TAIL_POS] = 1'b1; //TAIL
-        flit_in[VC_POS-:VC_ADDRESS_WIDTH] = 1'b1; //VC
+        flit_in[VC_POS-:VC_ADDRESS_WIDTH] = 1'b0; //VC
 		flit_in[DEST_POS-:ADDRESS_WIDTH] = DEST_NODE; //destination node
 		
         prod_rand = $random(prod_rand);
 	end
+    
+    flit_in[VALID_POS] = 1'b0;
+
 end
 
 
@@ -131,17 +134,17 @@ initial begin
 	tot = 0;
 	// We generate the same numbers as the producer process
 	// by using the same random seed sequence
-	for (cns_i = 0; cns_i < N_INPUTS*5; cns_i = cns_i + 1) begin
+	for (cns_i = 0; cns_i < N_INPUTS; cns_i = cns_i + 1) begin
 		// Wait for a valid output
 		@(posedge clk);
-		while (reset == 1 || flit_out[VALID_POS]!=1) begin
+		while (reset == 1 || flit_out[VALID_POS]!==1) begin
             credit_in = 0;
 			@(posedge clk);
 		end
 	
         //send a credit back
         if(reset==0)
-            credit_in[0] = 0;
+            credit_in[0] = 1;
 
 		// Use our copy of X to calculate the correct Y
 		cns_x = cns_rand[WIDTH-1:0];
@@ -155,14 +158,19 @@ initial begin
 		tot = tot + 1;
 
 		// Display and compare the answer to the known good value
-		if (good_y[DATA_POS:0] != flit_out[DATA_POS:0]) begin
-			$display("FAIL X: %d Expected Y: %d Got Y: %d", cns_x, good_y, flit_out[DATA_POS:0]);
+		if (good_y[DATA_POS:0] !== flit_out[DATA_POS:0]) begin
+			$display("FAIL(%d) X: %d Expected Y: %d Got Y: %d",tot, cns_x, good_y, flit_out[DATA_POS:0]);
 			fail = 1'b1;
 			num_fail = num_fail +1;
 		end
 		else begin
-			$display("SUCCESS X: %d Expected Y: %d Got Y: %d", cns_x, good_y, flit_out);
+			$display("SUCCESS(%d) X: %d Expected Y: %d Got Y: %d",tot, cns_x, good_y, flit_out[DATA_POS:0]);
 		end
+    
+        //break when we receive all inputs
+        if(tot==N_INPUTS-1)
+            break;
+
 	end
 	
 	$display("%s", fail? "SOME TESTS FAILED" : "ALL TESTS PASSED");
