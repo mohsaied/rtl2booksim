@@ -9,8 +9,10 @@ To get started, look at the examples.
 
 1. cpp_example: Calls functions like "send_flit" and "send_credit" to demonstrate how you can write a simple cpp simulator that communicates with Booksim.
 2. verilog_example: Instantiates "rtl_interface.sv" which is basically a verilog wrapper for the Booksim NoC. You can then connect your design modules to different routers through rtl_interface.
+(note that you need a working isntallation of modelsim (vsim) for the verilog example to work)
 
 In both examples there is a shell script called "quickscript" which contains the necessary steps to properly compile and run each example.
+Additionally, you can type "./quickscript vsim" to open up modelsim's wave window and debug your design.
 
 For more information please visit http://www.eecg.utoronto.ca/~mohamed/rtl2booksim
 
