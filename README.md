@@ -12,7 +12,7 @@ To get started, look at the examples.
 (note that you need a working isntallation of modelsim (vsim) for the verilog example to work)
 
 In both examples there is a shell script called "quickscript" which contains the necessary steps to properly compile and run each example.
-Additionally, you can type "./quickscript vsim" to open up modelsim's wave window and debug your design.
+Additionally, in the verilog example, you can type "./quickscript vsim" to open up modelsim's wave window and debug your design.
 
 For more information please visit http://www.eecg.utoronto.ca/~mohamed/rtl2booksim
 
